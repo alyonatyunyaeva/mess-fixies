@@ -1,18 +1,24 @@
 <template>
   <div>
-    Привет
-    <div>{{ points }}</div>
+    Mess Fixies
+
     <PointSorter :points="points" />
+    <ManualData
+      @showManualData="handleManualDate"
+      @showDefaultData="handlerRawPoints"
+    />
   </div>
 </template>
 
 <script>
 import PointSorter from '@/components/PointSorter';
+import ManualData from '@/components/ManualData';
 import { fetchPoints, convert } from '@/data';
 
 export default {
   components: {
     PointSorter,
+    ManualData,
   },
   data() {
     return {
@@ -27,6 +33,9 @@ export default {
     },
     handlerRawPoints() {
       this.points = convert(this.rawPoints);
+    },
+    handleManualDate(manualData) {
+      this.points = manualData;
     },
   },
 

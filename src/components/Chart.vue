@@ -1,11 +1,11 @@
 <template>
-  <div class="small">
+  <div class="small" v-if="points && datacollection">
     <line-chart :chart-data="datacollection" :options="options"></line-chart>
   </div>
 </template>
 
 <script>
-import LineChart from '@/components/LineChart.js';
+import LineChart from '@/components/LineChart';
 
 export default {
   components: {
@@ -13,6 +13,12 @@ export default {
   },
   props: {
     points: Array,
+    labels: Array,
+  },
+  watch: {
+    points: function() {
+      this.fillData();
+    },
   },
   data() {
     return {
@@ -20,49 +26,31 @@ export default {
       options: null,
     };
   },
+  computed: {
+    colors() {
+      let colors = [];
+
+      for (let i = 0; i < this.points.length; i++) {
+        colors.push('#' + Math.floor(Math.random() * 16777215).toString(16));
+      }
+      console.log(colors);
+      return colors;
+    },
+  },
   mounted() {
     this.fillData();
   },
   methods: {
     fillData() {
       this.datacollection = {
-        // datasets: [
-        //   {
-        //     label: 'Data One',
-        //     backgroundColor: '#f87979',
-        //     data: [
-        //       { x: 10, y: 20 },
-        //       { x: 13, y: 25 },
-        //     ],
-        //   },
-        //   {
-        //     label: 'Data One',
-        //     backgroundColor: '#f87979',
-        //     data: [
-        //       { x: 14, y: 28 },
-        //       { x: 16, y: 23 },
-        //     ],
-        //   },
-        // ],
+        labels: this.labels,
         datasets: [
           {
-            data: this.points.map((el) => {
-              return { x: el.x, y: el.y };
-            }),
+            data: this.points,
             borderColor: 'black',
             borderWidth: 1,
-            pointBackgroundColor: [
-              '#000',
-              '#00bcd6',
-              '#d300d6',
-              '#000',
-              '#00bcd6',
-              '#d300d6',
-              '#000',
-              '#00bcd6',
-              '#d300d6',
-            ],
-            pointBorderColor: ['#000', '#00bcd6', '#d300d6'],
+            pointBackgroundColor: this.colors,
+            pointBorderColor: this.colors,
             pointRadius: 5,
             pointHoverRadius: 5,
             fill: false,
@@ -73,14 +61,25 @@ export default {
       };
       this.options = {
         legend: false,
-        tooltips: false,
+        tooltips: {
+          callbacks: {
+            label: function(tooltipItem, data) {
+              let label = data.labels[tooltipItem.index];
+              return (
+                label +
+                ': (' +
+                tooltipItem.xLabel +
+                ', ' +
+                tooltipItem.yLabel +
+                ')'
+              );
+            },
+          },
+        },
         scales: {
           xAxes: [
             {
-              ticks: {
-                min: -10,
-                max: 30,
-              },
+              ticks: {},
               gridLines: {
                 color: '#888',
                 drawOnChartArea: false,
@@ -90,8 +89,6 @@ export default {
           yAxes: [
             {
               ticks: {
-                min: 0,
-                max: 20,
                 padding: 10,
               },
               gridLines: {
