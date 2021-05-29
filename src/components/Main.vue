@@ -1,12 +1,13 @@
 <template>
   <div>
-    Mess Fixies
-
-    <PointSorter :points="points" />
-    <ManualData
-      @showManualData="handleManualDate"
-      @showDefaultData="handlerRawPoints"
-    />
+    <h1>Mess Fixies</h1>
+    <main class="main">
+      <PointSorter :points="points" />
+      <ManualData
+        @showManualData="handleManualDate"
+        @showDefaultData="handlerRawPoints"
+      />
+    </main>
   </div>
 </template>
 
@@ -45,4 +46,10 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.main {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap-reverse;
+}
+</style>

@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <Chart :points="pointsForDraw" :labels="labels" />
-    <PontsPreview :points="points" />
+  <div class="chart">
+    <div><Chart :points="pointsForDraw" :labels="labels" /></div>
+    <div class="chart__info"><PontsPreview :points="points" /></div>
   </div>
 </template>
 
@@ -44,4 +44,17 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.chart {
+  display: flex;
+  margin: 0 40px;
+  flex-wrap: wrap;
+}
+.chart__info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 32px;
+  color: rgb(118, 118, 129);
+}
+</style>

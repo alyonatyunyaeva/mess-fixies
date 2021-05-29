@@ -1,17 +1,21 @@
 <template>
-  <div>
+  <div class="form">
     <h2>Задать входные данные</h2>
-    <button @click="addPoint">Добавить точку</button>
+
     <form @submit="handleSubmit">
-      <div v-for="(point, index) in manualData" :key="index">
-        <label>x</label>
+      <div class="form-group" v-for="(point, index) in manualData" :key="index">
+        <span>{{ index }}</span>
+        <label class="label">x :</label>
         <input type="tel" v-model="manualData[index].x" />
-        <label>y</label>
+        <label class="label">y :</label>
         <input type="tel" v-model="manualData[index].y" />
       </div>
-      <button type="submit">Обработать</button>
+      <button class="button" @click="addPoint">+ Добавить точку</button>
+      <button class="button" type="submit">Обработать</button>
+      <button class="button" @click="onClose" v-if="manualData.length">
+        Сбросить
+      </button>
     </form>
-    <button @click="onClose">Сбросить</button>
   </div>
 </template>
 
@@ -26,7 +30,9 @@ export default {
     };
   },
   methods: {
-    addPoint() {
+    addPoint(e) {
+      e.stopPropagation();
+      e.preventDefault();
       this.manualData.push(makePoint());
     },
     handleSubmit(e) {
@@ -47,4 +53,26 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.form {
+  margin: 0 40px;
+}
+.button {
+  margin: 24px 8px;
+  border: solid 1px;
+  border-radius: 5px;
+  font: inherit;
+  color: inherit;
+  background-color: transparent;
+  cursor: pointer;
+}
+.button:hover {
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+.form-group {
+  margin: 16px;
+}
+.label {
+  margin: 0 8px 0 20px;
+}
+</style>
