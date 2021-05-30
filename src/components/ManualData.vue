@@ -56,6 +56,7 @@ export default {
 <style scoped>
 .form {
   margin: 0 40px;
+  width: 35%;
 }
 .button {
   margin: 24px 8px;

@@ -1,13 +1,13 @@
 <template>
   <div class="chart">
     <div><Chart :points="pointsForDraw" :labels="labels" /></div>
-    <div class="chart__info"><PontsPreview :points="points" /></div>
+    <div class="chart__info"><PontsPreview :points="sortedPoints" /></div>
   </div>
 </template>
 
 <script>
 import { orderBy } from 'lodash';
-import Chart from '@/components/Chart';
+import Chart from '@/components/Chart/Chart';
 import PontsPreview from '@/components/PontsPreview';
 
 export default {

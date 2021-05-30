@@ -1,15 +1,15 @@
 <template>
   <div class="small" v-if="points && datacollection">
-    <line-chart :chart-data="datacollection" :options="options"></line-chart>
+    <ChartHeart :chart-data="datacollection" :options="options"></ChartHeart>
   </div>
 </template>
 
 <script>
-import LineChart from '@/components/LineChart';
+import ChartHeart from '@/components/Chart/ChartHeart';
 
 export default {
   components: {
-    LineChart,
+    ChartHeart,
   },
   props: {
     points: Array,
@@ -33,7 +33,6 @@ export default {
       for (let i = 0; i < this.points.length; i++) {
         colors.push('#' + Math.floor(Math.random() * 16777215).toString(16));
       }
-      console.log(colors);
       return colors;
     },
   },
